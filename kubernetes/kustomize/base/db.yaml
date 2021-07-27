@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: sofupo-db
+  name: sofupo-db
+spec:
+  selector:
+    matchLabels:
+      app: sofupo-db
+  template:
+    metadata:
+      labels:
+        app: sofupo-db
+    spec:
+      containers:
+      - name: sofupo-db
+        image: ${REGISTRY_ID}.dkr.ecr.ap-northeast-1.amazonaws.com/sofupo-db:${DB_IMAGE_TAG}
+        ports:
+        - containerPort: ${DB_PORT}
+        imagePullPolicy: Always
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            configMapKeyRef:
+              name: config
+              key: POSTGRES_USER
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: config
+              key: POSTGRES_PASSWORD
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              name: config
+              key: POSTGRES_DB
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: sofupo-db
+  name: sofupo-db
+spec:
+  ports:
+  - port: ${DB_PORT}
+    targetPort: ${DB_PORT}
+  selector:
+    app: sofupo-db

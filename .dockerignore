@@ -1,0 +1,10 @@
+dockerfiles
+docker-compose.yml
+.git
+.github
+.env
+.env.dev
+.env.sample
+.gitignore
+README.md
+.idea
