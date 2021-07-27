@@ -1,0 +1,30 @@
+FROM golang:1.15-alpine as build
+
+WORKDIR /backend
+
+ENV GO111MODULE=on
+
+COPY go.mod go.sum ./
+
+RUN go mod download
+
+COPY . .
+
+RUN go build main.go
+
+
+FROM golang:1.15-alpine as server
+
+WORKDIR /backend
+
+ENV GO111MODULE=on
+
+COPY go.mod go.sum ./
+
+RUN go mod download
+
+COPY --from=build /backend/main .
+
+EXPOSE 8080
+
+CMD ["./main"]

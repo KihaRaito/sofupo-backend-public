@@ -1,0 +1,18 @@
+FROM golang:1.15-alpine
+
+WORKDIR /backend
+
+#ENV CGO_ENABLED=0
+#ENV GOOS=linux
+#ENV GOARCH=amd64
+ENV GO111MODULE=on
+
+COPY go.mod go.sum ./
+
+RUN go mod download
+
+COPY . .
+
+EXPOSE 8080
+
+ENTRYPOINT ["go", "run", "main.go"]

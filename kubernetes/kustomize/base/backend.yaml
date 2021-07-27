@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: sofupo-backend
+  name: sofupo-backend
+spec:
+  selector:
+    matchLabels:
+      app: sofupo-backend
+  template:
+    metadata:
+      labels:
+        app: sofupo-backend
+    spec:
+      containers:
+      - name: sofupo-backend
+        image: ${REGISTRY_ID}.dkr.ecr.ap-northeast-1.amazonaws.com/sofupo-backend:${BACKEND_IMAGE_TAG}
+        ports:
+        - containerPort: ${BACKEND_PORT}
+        imagePullPolicy: Always
+        env:
+        - name: DB_DRIVER
+          valueFrom:
+            configMapKeyRef:
+              name: config
+              key: DB_DRIVER
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: config
+              key: DB_HOST
+        - name: POSTGRES_USER
+          valueFrom:
+            configMapKeyRef:
+              name: config
+              key: POSTGRES_USER
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: config
+              key: POSTGRES_PASSWORD
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              name: config
+              key: POSTGRES_DB
+        - name: S3_REGION
+          valueFrom:
+            configMapKeyRef:
+              name: config
+              key: S3_REGION
+        - name: S3_BUCKET_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: config
+              key: S3_BUCKET_NAME
+        - name: ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: secret
+              key: ACCESS_KEY_ID
+        - name: SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: secret
+              key: SECRET_ACCESS_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: sofupo-backend
+  name: sofupo-backend
+spec:
+  type: NodePort
+  selector:
+    app: sofupo-backend
+  ports:
+    - nodePort: ${NODE_PORT}
+      port: 80
+      targetPort: ${BACKEND_PORT}

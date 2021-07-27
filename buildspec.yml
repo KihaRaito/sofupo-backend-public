@@ -1,0 +1,38 @@
+version: 0.2
+env:
+  variables:
+    BACKEND_IMAGE_NAME: sofupo-backend
+    BACKEND_IMAGE_TAG: 0.1.0
+    DB_IMAGE_NAME: sofupo-db
+    DB_IMAGE_TAG: 0.1.0
+phases:
+  pre_build:
+    commands:
+      - REGISTRY_URI=${REGISTRY_ID}.dkr.ecr.ap-northeast-1.amazonaws.com
+  build:
+    commands:
+      - aws ecr get-login-password --region ap-northeast-1 | docker login --username AWS --password-stdin ${REGISTRY_URI}
+
+      # backend
+      - IMAGE_NAME=${BACKEND_IMAGE_NAME}
+      - IMAGE_TAG=${BACKEND_IMAGE_TAG}
+      - aws ecr create-repository --repository-name ${IMAGE_NAME} --region ap-northeast-1 || true
+      - REPOSITORY_URI=${REGISTRY_URI}/${IMAGE_NAME}
+      - docker build -t ${REPOSITORY_URI}:${IMAGE_TAG} -f dockerfiles/Dockerfile.backend .
+      - docker tag ${REPOSITORY_URI}:${IMAGE_TAG} ${REPOSITORY_URI}:latest
+      - docker push ${REPOSITORY_URI}:${IMAGE_TAG}
+      - docker push ${REPOSITORY_URI}:latest
+      - unset IMAGE_NAME
+      - unset IMAGE_TAG
+
+      # db
+      - IMAGE_NAME=${DB_IMAGE_NAME}
+      - IMAGE_TAG=${DB_IMAGE_TAG}
+      - aws ecr create-repository --repository-name ${IMAGE_NAME} --region ap-northeast-1 || true
+      - REPOSITORY_URI=${REGISTRY_URI}/${IMAGE_NAME}
+      - docker build -t ${REPOSITORY_URI}:${IMAGE_TAG} -f dockerfiles/Dockerfile.db .
+      - docker tag ${REPOSITORY_URI}:${IMAGE_TAG} ${REPOSITORY_URI}:latest
+      - docker push ${REPOSITORY_URI}:${IMAGE_TAG}
+      - docker push ${REPOSITORY_URI}:latest
+      - unset IMAGE_NAME
+      - unset IMAGE_TAG

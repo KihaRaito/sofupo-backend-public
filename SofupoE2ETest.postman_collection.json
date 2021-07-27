@@ -1,0 +1,540 @@
+{
+	"info": {
+		"_postman_id": "55362103-a10b-4e9f-b5ab-25f18f2f9952",
+		"name": "SofupoE2ETest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "HandleGetAll",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"check HandleGetAll\", function(){",
+							"    var jsonData = pm.response.json()",
+							"    pm.expect(jsonData.message).to.eql(\"retrieving posts successfully\")",
+							"    pm.expect(jsonData.posts).to.eql([])",
+							"    pm.response.to.have.status(200)",
+							"    pm.response.to.be.success",
+							"    pm.response.to.be.ok",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "HandleGetAllByUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"check HandleGetAllByUser\", function(){",
+							"    var jsonData = pm.response.json()",
+							"    pm.expect(jsonData.message).to.eql(\"retrieving posts by user successfully\")",
+							"    pm.expect(jsonData.posts).to.eql([])",
+							"    pm.response.to.have.status(200)",
+							"    pm.response.to.be.success",
+							"    pm.response.to.be.ok",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user?id=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "HandleGetMyShops",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"check HandleGetMyShops\", function(){",
+							"    var jsonData = pm.response.json()",
+							"    pm.expect(jsonData.message).to.eql(\"retrieving my shops successfully\")",
+							"    pm.expect(jsonData.myshops).to.eql(null)",
+							"    pm.response.to.have.status(200)",
+							"    pm.response.to.be.success",
+							"    pm.response.to.be.ok",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/list?id=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"list"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "HandleGet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"/*",
+							"pm.test(\"check HandleGet\", function(){",
+							"    var jsonData = pm.response.json()",
+							"    pm.expect(jsonData.message).to.eql(\"retrieving post successfully\")",
+							"    pm.expect(jsonData.post).to.eql({",
+							"        \"ID\": 0,",
+							"        \"CreatedAt\": \"0001-01-01T00:00:00Z\",",
+							"        \"UpdatedAt\": \"0001-01-01T00:00:00Z\",",
+							"        \"DeletedAt\": null,",
+							"        \"user_id\": \"\",",
+							"        \"comment\": \"\",",
+							"        \"shop_name\": \"\",",
+							"        \"shop_address\": \"\",",
+							"        \"image\": \"\",",
+							"        \"score\": 0",
+							"    })",
+							"    pm.response.to.have.status(200)",
+							"    pm.response.to.be.success",
+							"    pm.response.to.be.ok",
+							"})",
+							"*/",
+							"",
+							"pm.test(\"check HandleGet\", function(){",
+							"    pm.response.to.have.status(500)",
+							"    pm.response.to.be.serverError",
+							"    pm.response.to.have.status(\"Internal Server Error\")",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/show?id=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"show"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "HandleEdit",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"/*",
+							"pm.test(\"check HandleEdit\", function(){",
+							"    var jsonData = pm.response.json()",
+							"    pm.expect(jsonData.message).to.eql(\"\")",
+							"    pm.expect(jsonData.post).to.eql({",
+							"        \"ID\": 0,",
+							"        \"CreatedAt\": \"0001-01-01T00:00:00Z\",",
+							"        \"UpdatedAt\": \"0001-01-01T00:00:00Z\",",
+							"        \"DeletedAt\": null,",
+							"        \"user_id\": \"\",",
+							"        \"comment\": \"\",",
+							"        \"shop_name\": \"\",",
+							"        \"shop_address\": \"\",",
+							"        \"image\": \"\",",
+							"        \"score\": 0",
+							"    })",
+							"    pm.response.to.have.status(200)",
+							"    pm.response.to.be.success",
+							"    pm.response.to.be.ok",
+							"})",
+							"*/",
+							"",
+							"pm.test(\"check HandleGet\", function(){",
+							"    pm.response.to.have.status(500)",
+							"    pm.response.to.be.serverError",
+							"    pm.response.to.have.status(\"Internal Server Error\")",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/edit?id=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"edit"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "HandleConfirm",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"check HandleConfirm\", function(){",
+							"    pm.response.to.have.status(500)",
+							"    pm.response.to.be.serverError",
+							"    pm.response.to.have.status(\"Internal Server Error\")",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/confirm",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"confirm"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "HandlePost",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"check HandlePost\", function(){",
+							"    var jsonData = pm.response.json()",
+							"    pm.expect(jsonData.message).to.eql(\"creating post successfully\")",
+							"    pm.response.to.have.status(200)",
+							"    pm.response.to.be.success",
+							"    pm.response.to.be.ok",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "user_id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "comment",
+							"value": "comment",
+							"type": "text"
+						},
+						{
+							"key": "shop_name",
+							"value": "shop_name",
+							"type": "text"
+						},
+						{
+							"key": "shop_address",
+							"value": "shop_address",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"value": "image",
+							"type": "text"
+						},
+						{
+							"key": "score",
+							"value": "99.9",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/post",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "HandlePut",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"check HandlePut\", function(){",
+							"    var jsonData = pm.response.json()",
+							"    pm.expect(jsonData.message).to.eql(\"updating post successfully\")",
+							"    pm.response.to.have.status(200)",
+							"    pm.response.to.be.success",
+							"    pm.response.to.be.ok",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "ID",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "user_id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "comment",
+							"value": "comment",
+							"type": "text"
+						},
+						{
+							"key": "shop_name",
+							"value": "shop_name",
+							"type": "text"
+						},
+						{
+							"key": "shop_address",
+							"value": "shop_address",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"value": "image",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/put",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"put"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "HandleMerge",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"check HandleMerge\", function(){",
+							"    var jsonData = pm.response.json()",
+							"    pm.expect(jsonData.message).to.eql(\"merging my shops successfully\")",
+							"    pm.expect(jsonData.myshops).to.eql([",
+							"        {",
+							"            \"name\": \"shop_name\",",
+							"            \"address\": \"shop_address\"",
+							"        }",
+							"    ])",
+							"    pm.response.to.have.status(200)",
+							"    pm.response.to.be.success",
+							"    pm.response.to.be.ok",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "merge_user_id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "merged_user_id",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/merge",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"merge"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "HandleDelete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"check HandleDelete\", function(){",
+							"    var jsonData = pm.response.json()",
+							"    pm.expect(jsonData.message).to.eql(\"deleting post successfully\")",
+							"    pm.response.to.have.status(200)",
+							"    pm.response.to.be.success",
+							"    pm.response.to.be.ok",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "user_id",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/delete",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"delete"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

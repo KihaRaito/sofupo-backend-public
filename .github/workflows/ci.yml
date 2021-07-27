@@ -1,0 +1,30 @@
+name: CI
+on:
+  pull_request:
+    types: [opened, edited, synchronize, closed]
+    branches:
+      - "*"
+
+jobs:
+  unittest:
+    name: UnitTest
+    runs-on: ubuntu-latest
+    container:
+      image: golang:1.15
+    steps:
+      - uses: actions/checkout@v2
+      - name: go test
+        run: go test ./... -v -cover
+
+  e2e:
+    name: E2ETest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: install newman
+        run: sudo npm install -g newman
+      - name: newman run
+        run: |
+          docker-compose up -d
+          sleep 15
+          newman run SofupoE2ETest.postman_collection.json
